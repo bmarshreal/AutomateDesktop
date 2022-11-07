@@ -17,17 +17,18 @@ from pynput import keyboard as pnpKey
 # emailList = []
 recCoordsList = []
 continuesList = []
+setter = True
 
 # for email in emails:
 #     emailList.append(email)
 
-
-hostQuestionOne = input("Would you like to record coordinates?\n")
+def HostQuestionOne():
+    hostQuestionOne = input("Would you like to record coordinates?\n")
+    return hostQuestionOne.lower()
 
 
 def CoordsRec(args):
 
-    args = args.lower()
     if(args == "y" or args == "v"):
         print('Press Ctrl-C to end recording mouse coordinates.\n')
         print('Press X at any time to capture mouse position and click in that position on playback.\n')
@@ -76,20 +77,20 @@ def CoordsRec(args):
         return NULL
 
 
-CoordsRec(hostQuestionOne)
-
+CoordsRec(HostQuestionOne())
 
 # ________________________________________________________________________________________________________________________________
-
-hostQuestionTwo = input(
-    "Would you like to enter a word into the playback sequence? Press Y if yes, pres N if no. Please delete the X's in the prompt... \n")
+def HostQuestionTwo():
+    hostQuestionTwo = input(
+        "Would you like to enter a word into the playback sequence? Press Y if yes, pres N if no. Please delete the X's in the prompt... \n")
+    return hostQuestionTwo.lower()
 
 # -----------------------------------------------------------------------------------------------------------------------------
 listenerList = []
 formattedList = []
 
 
-def startKeyLog():
+def StartKeyLog():
 
     print("Your keystrokes are now being recorded... Press the ESC key at any time to stop recording your keystrokes.\n")
 
@@ -117,22 +118,19 @@ def startKeyLog():
     with pnpKey.Listener(on_press=on_press, on_release=on_release) as listener:
         listener.join()
 
-    # ...or, in a non-blocking fashion:
-    # listener = pnpKey.Listener(on_press=on_press, on_release=on_release)
-    # listener.start()
-
-    # for item in listenerList:
-    #     item = item.replace("'", "")
-    #     item = item.replace("Key.space", " ")
-    #     item = item.replace("Key.esc", "")
-    #     formattedList.append(item)
-
+    
+def HostQuestionThree():
+    hostQuestionThree = input(
+        "Would you like to continue recording the mouse position? Press Y if yes, press N if no.\n")
+    return hostQuestionThree.lower()
 
 def DecisionTree(args):
-    args = args.lower()
+  while(setter):  
+
     if (args == "y"):
-        startKeyLog()
+        StartKeyLog()
     elif(args == "n"):
+        setter == False
         print("You have chosen to end the program.")
         time.sleep(1)
         pag.press("esc")
@@ -140,13 +138,14 @@ def DecisionTree(args):
         pag.hotkey("ctrl", "c")
         time.sleep(1)
         return NULL
-    hostQuestionThree = input(
-        "Would you like to continue recording the mouse position? Press Y if yes, press N if no.\n")
-    if(hostQuestionThree.lower() == "y"):
+
+    if(HostQuestionThree() == "y"):
         time.sleep(1)
         CoordsRec("v")
         time.sleep(1)
-    elif(hostQuestionThree.lower() == "n"):
+        
+    elif(HostQuestionThree() == "n"):
+        setter == False
         print("You have chosen to end the program.")
         time.sleep(1)
         pag.press("esc")
@@ -156,12 +155,7 @@ def DecisionTree(args):
         return NULL
 
 
-DecisionTree(hostQuestionTwo)
-
-
-# def playbackKeyboard(key):
-#     time.sleep(1)
-#     print(pag.press(key))
+DecisionTree(HostQuestionTwo())
 
 
 def PlayBack(arg, x, y):
@@ -177,14 +171,19 @@ def PlayBack(arg, x, y):
         time.sleep(1)
         for item in listenerList:
             time.sleep(1)
+            item = item.replace("'","")
+            item = item.replace("Key.esc","")
             pag.write(item)
     elif(arg == "v"):
         print(continuesList)
         time.sleep(1)
-
-        # playbackKeyboard(item)
-        # newFormattedList = ('').join(formattedList)
-        # print(newFormattedList)
+        # if(HostQuestionTwo == "y"):
+        #     time.sleep(1)
+        for item in listenerList:
+            time.sleep(1)
+            item = item.replace("'","")
+            item = item.replace("Key.esc","")
+            pag.write(item)
 
 
 for coord in recCoordsList:
