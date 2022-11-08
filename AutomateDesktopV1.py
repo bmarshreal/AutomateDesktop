@@ -19,9 +19,21 @@ from pynput import keyboard as pnpKey
 # emailList = []
 recCoordsList = []
 continuesList = []
+formattedList = []
+listenerList = []
+listenerList2 = []
 
 # for email in emails:
 #     emailList.append(email)
+
+def startKeyLog(arg):
+    arg = arg.lower()
+
+    command = input("Please enter keys that you wish to be played back in the sequence.")
+    if(arg == "y"):
+       listenerList.append(command)
+    elif(arg == "v"):
+        listenerList2.append(command)
 
 
 hostQuestionOne = input("Press Y and then Enter to start recording.\n")
@@ -34,9 +46,7 @@ def CoordsRec(args):
         print('Press Ctrl-C to end recording mouse coordinates.\n')
         print('Press X at any time to capture mouse position and click in that position on playback.\n')
         print("_______________________________________________________________________________")
-        # if(args == "v"):
-        #     time.sleep(2)
-        #     pag.hotkey("ctrl", "c")
+       
         try:
             while True:
 
@@ -61,10 +71,12 @@ def CoordsRec(args):
                     if(args == "v"):
                         continuesList.append((x, y))
                         time.sleep(1)
+                        startKeyLog("v")
 
                     elif(args == "y"):
                         recCoordsList.append((x, y))
                         time.sleep(1)
+                        # startKeyLog("y")
 
         except KeyboardInterrupt:
             print("---Please Wait---")
@@ -88,54 +100,52 @@ hostQuestionTwo = input(
     "Would you like to enter typed keys into the playback sequence? Press Y if yes, pres N if no. Please delete the X's in the prompt... \n")
 
 # -----------------------------------------------------------------------------------------------------------------------------
-listenerList = []
-formattedList = []
 
 
-def startKeyLog():
+    
 
-    print("Your keystrokes are now being recorded... Press the ESC key at any time to stop recording your keystrokes.\n")
+#     print("Your keystrokes are now being recorded... Press the ESC key at any time to stop recording your keystrokes.\n")
 
-    def on_press(key):
+#     def on_press(key):
 
-        listenerList.append(str(key))
+#         listenerList.append(str(key))
 
-        if key:
-            print(key)
+#         if key:
+#             print(key)
 
-        # Testing Key Presses----------------------------------------
-        # try:
-        #     print('alphanumeric key {0} pressed'.format(key.char))
-        # except AttributeError:
-        #     print('special key {0} pressed'.format(key))
+#         # Testing Key Presses----------------------------------------
+#         # try:
+#         #     print('alphanumeric key {0} pressed'.format(key.char))
+#         # except AttributeError:
+#         #     print('special key {0} pressed'.format(key))
 
-    def on_release(key):
-        # Testing key releases---------------------------------------
-        # print('{0} released'.format(key))
-        if key == pnpKey.Key.esc:
-            # Stop listener
-            return False
+#     def on_release(key):
+#         # Testing key releases---------------------------------------
+#         # print('{0} released'.format(key))
+#         if key == pnpKey.Key.esc:
+#             # Stop listener
+#             return False
 
-    # Collect events until released
-    with pnpKey.Listener(on_press=on_press, on_release=on_release) as listener:
-        listener.join()
+#     # Collect events until released
+#     with pnpKey.Listener(on_press=on_press, on_release=on_release) as listener:
+#         listener.join()
 
-    # ...or, in a non-blocking fashion:
-    # listener = pnpKey.Listener(on_press=on_press, on_release=on_release)
-    # listener.start()
+#     # ...or, in a non-blocking fashion:
+#     # listener = pnpKey.Listener(on_press=on_press, on_release=on_release)
+#     # listener.start()
 
-    # for item in listenerList:
-    #     item = item.replace("'", "")
-    #     item = item.replace("Key.space", " ")
-    #     item = item.replace("Key.esc", "")
-    #     formattedList.append(item)
+#     # for item in listenerList:
+#     #     item = item.replace("'", "")
+#     #     item = item.replace("Key.space", " ")
+#     #     item = item.replace("Key.esc", "")
+#     #     formattedList.append(item)
 
 
 def DecisionTree(args):
     while True:
         args = args.lower()
         if (args == "y"):
-            startKeyLog()
+            startKeyLog(args)
         elif(args == "n"):
             print("You have chosen to end the program.")
             time.sleep(1)
@@ -160,7 +170,7 @@ DecisionTree(hostQuestionTwo)
 # def playbackKeyboard(key):
 #     time.sleep(1)
 #     print(pag.press(key))
-def PlayBack(arg, x, y):
+def PlayBack(arg, x, y,item):
     arg = arg.lower()
     time.sleep(1)
     pag.moveTo(x, y, duration=1)
@@ -171,37 +181,44 @@ def PlayBack(arg, x, y):
     if(arg == "y"):
         print(recCoordsList)
         time.sleep(1)
-        for item in listenerList:
-            time.sleep(1)
-            item = item.replace("'", "")
-            item = item.replace("Key.esc", "")
-            item = item.replace("Key.space", " ")
-            pag.write(item)
+        # for item in listenerList:
+        #     time.sleep(1)
+            # item = item.replace("'", "")
+            # item = item.replace("Key.esc", "")
+            # item = item.replace("Key.space", " ")
+        pag.write(item)
     elif(arg == "v"):
         print(continuesList)
         time.sleep(1)
+        pag.write(item)
 
         # playbackKeyboard(item)
         # newFormattedList = ('').join(formattedList)
         # print(newFormattedList)
 
+for iter,(item1,item2) in enumerate(zip(recCoordsList,listenerList)):
+    a,b = item1
+    PlayBack("y",a,b,item2)
+    
+for iter,(item1,item2) in enumerate(zip(continuesList,listenerList2)):
+    a,b = item1
+    PlayBack("v",a,b,item2)
 
-for coord in recCoordsList:
-    time.sleep(2)
-    x, y = coord
-    PlayBack("y", x, y)
-    time.sleep(1)
 
-for coord in continuesList:
-    time.sleep(2)
-    x, y = coord
-    PlayBack("v", x, y)
+# for coord in recCoordsList:
+#     time.sleep(2)
+#     x, y = coord
+#     PlayBack("y", x, y#     time.sleep(1)hereherhere
+# for coord in continuesList:
+#     time.sleep(2)
+#     x, y = coord
+#     PlayBack("v", x, y)
 
 # print(listenerList)
 # combinedChars = []
 # print(combinedChars)
 # for item in listenerList:
-#     combinedChars.append(' '.join(item))
+#     combinedChars.append(' '.join(item))hereis a test
 
 # print(combinedChars)
 
