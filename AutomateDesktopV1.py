@@ -9,6 +9,8 @@ import keyboard
 import re
 from pynput import keyboard as pnpKey
 
+#combine the mouse.move and keyboard.write into the same source via tuple and enumeration. Feed source into seperate functions that will act upon the source differently from eachother.
+
 # dirpath = os.path.dirname
 
 # df = pd.read_excel(r'D:\PPDproj\SamplePPDSpreadsheet.xlsx',engine='openpyxl')
