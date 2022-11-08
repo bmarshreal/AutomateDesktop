@@ -17,18 +17,17 @@ from pynput import keyboard as pnpKey
 # emailList = []
 recCoordsList = []
 continuesList = []
-setter = True
 
 # for email in emails:
 #     emailList.append(email)
 
-def HostQuestionOne():
-    hostQuestionOne = input("Would you like to record coordinates?\n")
-    return hostQuestionOne.lower()
+
+hostQuestionOne = input("Press Y and then Enter to start recording.\n")
 
 
 def CoordsRec(args):
 
+    args = args.lower()
     if(args == "y" or args == "v"):
         print('Press Ctrl-C to end recording mouse coordinates.\n')
         print('Press X at any time to capture mouse position and click in that position on playback.\n')
@@ -66,6 +65,7 @@ def CoordsRec(args):
                         time.sleep(1)
 
         except KeyboardInterrupt:
+            print("---Please Wait---")
             pag.click()
             pag.press('del')
             print('\n')
@@ -77,20 +77,20 @@ def CoordsRec(args):
         return NULL
 
 
-CoordsRec(HostQuestionOne())
+CoordsRec(hostQuestionOne)
+
 
 # ________________________________________________________________________________________________________________________________
-def HostQuestionTwo():
-    hostQuestionTwo = input(
-        "Would you like to enter a word into the playback sequence? Press Y if yes, pres N if no. Please delete the X's in the prompt... \n")
-    return hostQuestionTwo.lower()
+
+hostQuestionTwo = input(
+    "Would you like to enter typed keys into the playback sequence? Press Y if yes, pres N if no. Please delete the X's in the prompt... \n")
 
 # -----------------------------------------------------------------------------------------------------------------------------
 listenerList = []
 formattedList = []
 
 
-def StartKeyLog():
+def startKeyLog():
 
     print("Your keystrokes are now being recorded... Press the ESC key at any time to stop recording your keystrokes.\n")
 
@@ -118,46 +118,46 @@ def StartKeyLog():
     with pnpKey.Listener(on_press=on_press, on_release=on_release) as listener:
         listener.join()
 
-    
-def HostQuestionThree():
-    hostQuestionThree = input(
-        "Would you like to continue recording the mouse position? Press Y if yes, press N if no.\n")
-    return hostQuestionThree.lower()
+    # ...or, in a non-blocking fashion:
+    # listener = pnpKey.Listener(on_press=on_press, on_release=on_release)
+    # listener.start()
+
+    # for item in listenerList:
+    #     item = item.replace("'", "")
+    #     item = item.replace("Key.space", " ")
+    #     item = item.replace("Key.esc", "")
+    #     formattedList.append(item)
+
 
 def DecisionTree(args):
-  while(setter):  
-
-    if (args == "y"):
-        StartKeyLog()
-    elif(args == "n"):
-        setter == False
-        print("You have chosen to end the program.")
-        time.sleep(1)
-        pag.press("esc")
-        time.sleep(1)
-        pag.hotkey("ctrl", "c")
-        time.sleep(1)
-        return NULL
-
-    if(HostQuestionThree() == "y"):
-        time.sleep(1)
-        CoordsRec("v")
-        time.sleep(1)
-        
-    elif(HostQuestionThree() == "n"):
-        setter == False
-        print("You have chosen to end the program.")
-        time.sleep(1)
-        pag.press("esc")
-        time.sleep(1)
-        pag.hotkey("ctrl", "c")
-        time.sleep(1)
-        return NULL
+    while True:
+        args = args.lower()
+        if (args == "y"):
+            startKeyLog()
+        elif(args == "n"):
+            print("You have chosen to end the program.")
+            time.sleep(1)
+            pag.press("esc")
+            time.sleep(1)
+            pag.hotkey("ctrl", "c")
+            time.sleep(1)
+            return NULL
+        hostQuestionThree = input(
+            "Would you like to continue recording the mouse position? Press Y if yes, press N if no.\n")
+        if(hostQuestionThree.lower() == "y"):
+            time.sleep(1)
+            CoordsRec("v")
+            time.sleep(1)
+        elif(hostQuestionThree.lower() == "n"):
+            break
 
 
-DecisionTree(HostQuestionTwo())
+DecisionTree(hostQuestionTwo)
 
 
+# def playbackKeyboard(key):
+#     time.sleep(1)
+#     print(pag.press(key))
 def PlayBack(arg, x, y):
     arg = arg.lower()
     time.sleep(1)
@@ -171,19 +171,17 @@ def PlayBack(arg, x, y):
         time.sleep(1)
         for item in listenerList:
             time.sleep(1)
-            item = item.replace("'","")
-            item = item.replace("Key.esc","")
+            item = item.replace("'", "")
+            item = item.replace("Key.esc", "")
+            item = item.replace("Key.space", " ")
             pag.write(item)
     elif(arg == "v"):
         print(continuesList)
         time.sleep(1)
-        # if(HostQuestionTwo == "y"):
-        #     time.sleep(1)
-        for item in listenerList:
-            time.sleep(1)
-            item = item.replace("'","")
-            item = item.replace("Key.esc","")
-            pag.write(item)
+
+        # playbackKeyboard(item)
+        # newFormattedList = ('').join(formattedList)
+        # print(newFormattedList)
 
 
 for coord in recCoordsList:
@@ -197,7 +195,6 @@ for coord in continuesList:
     x, y = coord
     PlayBack("v", x, y)
 
-
 # print(listenerList)
 # combinedChars = []
 # print(combinedChars)
@@ -209,89 +206,33 @@ for coord in continuesList:
 
 # def Monitor(args):
 
-#     while args:
-#         if(pynput.keyboard() == "x"):
-#             CoordsRec("x")
-
-# if():
-
-
-# def OpenDB():
-#     os.startfile('D:\PPDproj\SampleRAMDatabase.xlsx')
-#     return True
-
-# def OpenSpreadsheet():
-#     os.startfile('D:\PPDproj\SamplePPDSpreadsheet.xlsx')
-#     return True
-
-
-# def DelayedMenuDB():
-#     pag.moveTo(645,600)
-#     pag.click()
-#     pag.press('home')
-#     pag.press('pgup')
-#     time.sleep(7)
-#     win = pygetwindow.getWindowsWithTitle('SampleRAMDatabase')[0]
-#     win.maximize()
-#     pag.moveTo(1280,235)
-#     pag.click(1280,235)
-#     pag.moveTo(1120,445)
-#     pag.click(1120,445)
-
-
-# def DelayedGetData():
-#     time.sleep(5)
-#     pag.click()
-#     pag.press('home')
-#     pag.moveTo(61,257)
-#     pag.dragTo(167,257,2, button='left')
-#     time.sleep(5)
-#     pag.hotkey('ctrl','c')
-#     pag.hotkey('ctrl','z')
-#     time.sleep(5)
-
-
-# def DelayedMenuSpeadS():
-#     pag.moveTo(645,600)
-#     pag.click()
-#     time.sleep(5)
-#     win2 = pygetwindow.getWindowsWithTitle('SamplePPDSpreadsheet')[0]
-#     win2.maximize()
-#     pag.click()
-#     pag.moveTo(837,235)
-#     pag.click(837,235)
-#     pag.moveTo(700,447)
-#     pag.click(700,447)
-
-
-# def DelayedPutData(arg):
-#     pag.moveTo(908,257)
-#     time.sleep(5)
-#     pag.write(arg)
-#     pag.press('enter')
-#     pag.dragTo(1077, 257,2, button='left')
-#     time.sleep(5)
-#     pag.hotkey('ctrl','v')
-#     pag.press('enter')
-#     pag.moveTo(457,48)
-#     pag.click()
-#     pag.moveTo(865,80)
-#     pag.click()
-#     time.sleep(5)
-
-# for email in emailList:
-#     if OpenDB() == False:
-#         OpenDB()
-#     else:
-#         time.sleep(5)
-#         DelayedMenuDB()
-#         pag.write(email)
-#         pag.press('enter')
-#         DelayedGetData()
-
-#         if OpenSpreadsheet() == False:
-#             OpenSpreadsheet()
-#         else:
-#             time.sleep(10)
-#             DelayedMenuSpeadS()
-#             DelayedPutData(email)
+    # if():
+    # def OpenDB():
+    #     os.startfile('D:\PPDproj\SampleRAMDatabase.xlsx')
+    #     return True
+    #     pag.click(1280,235)
+    #     pag.moveTo(1120,445)
+    #     pag.click(1120,445)
+    # def DelayedGetData():
+    #     time.sleep(5)
+    #     pag.hotkey('ctrl','c')
+    #     pag.hotkey('ctrl','z')
+    #     time.sleep(5)
+    # def DelayedMenuSpeadS():
+    #     pag.moveTo(645,600)
+    #     pag.click(837,235)
+    #     pag.moveTo(700,447)
+    #     pag.click(700,447)
+    # def DelayedPutData(arg):
+    #     pag.moveTo(908,257)
+    #     time.sleep(5)
+    #     pag.write(arg)
+    #     pag.press('enter')
+    #     pag.dragTo(1077, 257,2, button='left')
+    #     time.sleep(5)
+    #     pag.hotkey('ctrl','v')
+    #     pag.press('enter')
+    #     pag.moveTo(457,48)
+    #             time.sleep(10)
+    #             DelayedMenuSpeadS()
+    #             DelayedPutData(email)
