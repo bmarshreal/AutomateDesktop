@@ -158,7 +158,7 @@ def DecisionTree(args):
             "Would you like to continue recording the mouse position? Press Y if yes, press N if no.\n")
         if(hostQuestionThree.lower() == "y"):
             time.sleep(1)
-            CoordsRec("v")
+            CoordsRec("y")
             time.sleep(1)
         elif(hostQuestionThree.lower() == "n"):
             break
@@ -210,7 +210,7 @@ for iter,(item1,item2) in enumerate(zip(continuesList,listenerList2)):
 #     x, y = coord
 #     PlayBack("y", x, y#     time.sleep(1)hereherhere
 # for coord in continuesList:
-#     time.sleep(2)
+#     time.sleep(2)four
 #     x, y = coord
 #     PlayBack("v", x, y)
 
@@ -218,7 +218,7 @@ for iter,(item1,item2) in enumerate(zip(continuesList,listenerList2)):
 # combinedChars = []
 # print(combinedChars)
 # for item in listenerList:
-#     combinedChars.append(' '.join(item))hereis a test
+#     combinedChars.append(' '.join(item))hereis a testthree
 
 # print(combinedChars)
 
@@ -227,12 +227,12 @@ for iter,(item1,item2) in enumerate(zip(continuesList,listenerList2)):
 
     # if():
     # def OpenDB():
-    #     os.startfile('D:\PPDproj\SampleRAMDatabase.xlsx')
+    #     os.startfile('D:\PPDproj\SampleRAMDatabase.xlsx')two
     #     return True
     #     pag.click(1280,235)
     #     pag.moveTo(1120,445)
     #     pag.click(1120,445)
-    # def DelayedGetData():
+    # def DelayedGetData():one
     #     time.sleep(5)
     #     pag.hotkey('ctrl','c')
     #     pag.hotkey('ctrl','z')
