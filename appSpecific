@@ -82,9 +82,9 @@ def DelayedPutData(arg):
     time.sleep(5)
     pag.hotkey('ctrl', 'v')
     pag.press('enter')
-    pag.moveTo(457, 48)
+    pag.moveTo(389, 51)
     pag.click()
-    pag.moveTo(865, 80)
+    pag.moveTo(1105, 75)
     pag.click()
     time.sleep(5)
 
