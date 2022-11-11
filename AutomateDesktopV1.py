@@ -10,13 +10,6 @@ import re
 from pynput import keyboard as pnpKey
 
 #combine the mouse.move and keyboard.write into the same source via tuple and enumeration. Feed source into seperate functions that will act upon the source differently from eachother.
-
-# dirpath = os.path.dirname
-
-# df = pd.read_excel(r'D:\PPDproj\SamplePPDSpreadsheet.xlsx',engine='openpyxl')
-
-# emails = df.Email
-# emailList = []
 recCoordsList = []
 continuesList = []
 formattedList = []
@@ -101,46 +94,6 @@ hostQuestionTwo = input(
 
 # -----------------------------------------------------------------------------------------------------------------------------
 
-
-    
-
-#     print("Your keystrokes are now being recorded... Press the ESC key at any time to stop recording your keystrokes.\n")
-
-#     def on_press(key):
-
-#         listenerList.append(str(key))
-
-#         if key:
-#             print(key)
-
-#         # Testing Key Presses----------------------------------------
-#         # try:
-#         #     print('alphanumeric key {0} pressed'.format(key.char))
-#         # except AttributeError:
-#         #     print('special key {0} pressed'.format(key))
-
-#     def on_release(key):
-#         # Testing key releases---------------------------------------
-#         # print('{0} released'.format(key))
-#         if key == pnpKey.Key.esc:
-#             # Stop listener
-#             return False
-
-#     # Collect events until released
-#     with pnpKey.Listener(on_press=on_press, on_release=on_release) as listener:
-#         listener.join()
-
-#     # ...or, in a non-blocking fashion:
-#     # listener = pnpKey.Listener(on_press=on_press, on_release=on_release)
-#     # listener.start()
-
-#     # for item in listenerList:
-#     #     item = item.replace("'", "")
-#     #     item = item.replace("Key.space", " ")
-#     #     item = item.replace("Key.esc", "")
-#     #     formattedList.append(item)
-
-
 def DecisionTree(args):
     while True:
         args = args.lower()
@@ -205,53 +158,4 @@ for iter,(item1,item2) in enumerate(zip(continuesList,listenerList2)):
     PlayBack("v",a,b,item2)
 
 
-# for coord in recCoordsList:
-#     time.sleep(2)
-#     x, y = coord
-#     PlayBack("y", x, y#     time.sleep(1)hereherhere
-# for coord in continuesList:
-#     time.sleep(2)four
-#     x, y = coord
-#     PlayBack("v", x, y)
 
-# print(listenerList)
-# combinedChars = []
-# print(combinedChars)
-# for item in listenerList:
-#     combinedChars.append(' '.join(item))hereis a testthree
-
-# print(combinedChars)
-
-
-# def Monitor(args):
-
-    # if():
-    # def OpenDB():
-    #     os.startfile('D:\PPDproj\SampleRAMDatabase.xlsx')two
-    #     return True
-    #     pag.click(1280,235)
-    #     pag.moveTo(1120,445)
-    #     pag.click(1120,445)
-    # def DelayedGetData():one
-    #     time.sleep(5)
-    #     pag.hotkey('ctrl','c')
-    #     pag.hotkey('ctrl','z')
-    #     time.sleep(5)
-    # def DelayedMenuSpeadS():
-    #     pag.moveTo(645,600)
-    #     pag.click(837,235)
-    #     pag.moveTo(700,447)
-    #     pag.click(700,447)
-    # def DelayedPutData(arg):
-    #     pag.moveTo(908,257)
-    #     time.sleep(5)
-    #     pag.write(arg)
-    #     pag.press('enter')
-    #     pag.dragTo(1077, 257,2, button='left')
-    #     time.sleep(5)
-    #     pag.hotkey('ctrl','v')
-    #     pag.press('enter')
-    #     pag.moveTo(457,48)
-    #             time.sleep(10)
-    #             DelayedMenuSpeadS()
-    #             DelayedPutData(email)
