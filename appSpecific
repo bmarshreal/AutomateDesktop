@@ -1,0 +1,107 @@
+from asyncio.windows_events import NULL
+import pyautogui as pag
+import sys
+import pandas as pd
+import os
+import time
+import pygetwindow
+import keyboard
+import re
+import pynput
+
+dirpath = os.path.dirname
+
+df = pd.read_excel(
+    r'F:\Python_Projects\AutomateDesktop\PPDproj\SamplePPDSpreadsheet.xlsx', engine='openpyxl')
+
+emails = df.Email
+emailList = []
+recCoordsList = []
+
+for email in emails:
+    emailList.append(email)
+
+
+def OpenDB():
+    os.startfile(
+        'F:\Python_Projects\AutomateDesktop\PPDproj\SampleRAMDatabase.xlsx')
+    return True
+
+
+def OpenSpreadsheet():
+    os.startfile(
+        'F:\Python_Projects\AutomateDesktop\PPDproj\SamplePPDSpreadsheet.xlsx')
+    return True
+
+
+def DelayedMenuDB():
+    pag.moveTo(645, 600)
+    pag.click()
+    pag.press('home')
+    pag.press('pgup')
+    time.sleep(7)
+    win = pygetwindow.getWindowsWithTitle('SampleRAMDatabase')[0]
+    win.maximize()
+    pag.moveTo(1280, 235)
+    pag.click(1280, 235)
+    pag.moveTo(1120, 445)
+    pag.click(1120, 445)
+
+
+def DelayedGetData():
+    time.sleep(5)
+    pag.click()
+    pag.press('home')
+    pag.moveTo(61, 257)
+    pag.dragTo(167, 257, 2, button='left')
+    time.sleep(5)
+    pag.hotkey('ctrl', 'c')
+    pag.hotkey('ctrl', 'z')
+    time.sleep(5)
+
+
+def DelayedMenuSpeadS():
+    pag.moveTo(645, 600)
+    pag.click()
+    time.sleep(5)
+    win2 = pygetwindow.getWindowsWithTitle('SamplePPDSpreadsheet')[0]
+    win2.maximize()
+    pag.click()
+    pag.moveTo(837, 235)
+    pag.click(837, 235)
+    pag.moveTo(700, 447)
+    pag.click(700, 447)
+
+
+def DelayedPutData(arg):
+    pag.moveTo(908, 257)
+    time.sleep(5)
+    pag.write(arg)
+    pag.press('enter')
+    pag.dragTo(1077, 257, 2, button='left')
+    time.sleep(5)
+    pag.hotkey('ctrl', 'v')
+    pag.press('enter')
+    pag.moveTo(457, 48)
+    pag.click()
+    pag.moveTo(865, 80)
+    pag.click()
+    time.sleep(5)
+
+
+for email in emailList:
+    if OpenDB() == False:
+        OpenDB()
+    else:
+        time.sleep(5)
+        DelayedMenuDB()
+        pag.write(email)
+        pag.press('enter')
+        DelayedGetData()
+
+        if OpenSpreadsheet() == False:
+            OpenSpreadsheet()
+        else:
+            time.sleep(10)
+            DelayedMenuSpeadS()
+            DelayedPutData(email)
