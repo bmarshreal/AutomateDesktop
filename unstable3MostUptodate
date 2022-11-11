@@ -39,14 +39,14 @@ def startKeyLog(arg):
 
 
 def StartPlayBack():
-    for item in listenerList:
-        for iter, item in enumerate(recCoordsList):
-            if(item != 'z'):
-                a, b = item
+    for item1 in listenerList:
+        for iter, item2 in enumerate(recCoordsList):
+            if(item2 != 'z'):
+                a, b = item2
                 PlayBack("y", a, b,)
-            elif(item == 'z'):
+            elif(item2 == 'z'):
                 break
-    pag.write(item)
+        pag.write(item1)
 
 
 hostQuestionOne = input("Press Y and then Enter to start recording.\n")
@@ -244,7 +244,7 @@ StartPlayBack()
 #
 #
 #
-#
+#onetwo
 #
 #
 #
